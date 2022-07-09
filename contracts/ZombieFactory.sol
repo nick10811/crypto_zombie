@@ -32,6 +32,8 @@ contract ZombieFactory {
     }
 
     function createRandomZombie(string memory _name) public {
+        // avoid to create unlimited zombie for each accounts
+        require(ownerZombieCount[msg.sender] == 0); // throws an error if not true
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
