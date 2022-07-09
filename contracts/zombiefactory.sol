@@ -8,10 +8,13 @@ contract ZombieFactory is Ownable {
     
     uint dnaDigits = 16;
     uint dnaModulus = 10 ** dnaDigits;
+    uint cooldownTime = 1 days; // 1 day
 
     struct Zombie {
         string name;
         uint dna;
+        uint32 level;
+        uint32 readyTime; // cooldown period
     }
 
     Zombie[] public zombies;
@@ -21,7 +24,7 @@ contract ZombieFactory is Ownable {
 
 
     function _createZombie(string memory _name, uint _dna) internal {
-        uint id = zombies.push(Zombie(_name, _dna)) - 1;
+        uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1;
         // msg.sender is a global variable that refers to an address
         zombieToOwner[id] = msg.sender;
         ownerZombieCount[msg.sender]++;
