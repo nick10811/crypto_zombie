@@ -18,7 +18,7 @@ contract ZombieFactory {
     mapping (address => uint) ownerZombieCount;
 
 
-    function _createZombie(string memory _name, uint _dna) private {
+    function _createZombie(string memory _name, uint _dna) internal {
         uint id = zombies.push(Zombie(_name, _dna)) - 1;
         // msg.sender is a global variable that refers to an address
         zombieToOwner[id] = msg.sender;
